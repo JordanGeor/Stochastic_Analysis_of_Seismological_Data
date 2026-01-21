@@ -10,7 +10,9 @@ def gen_exponential(t, a, b, c):
 
 # --- Μοντέλο φάσματος ω² ---
 def omega2(f, A0, fc, n, gamma):
-    return A0 / (1 + (f / fc) ** (n * gamma)) ** (1.0 / gamma)
+    fc = np.clip(fc, 1e-3, 1e3)  # Αποφυγή πολύ μικρών ή μεγάλων fc
+    exponent = (f / fc) ** (n * gamma)
+    return A0 / (1 + exponent) ** (1.0 / gamma)
 
 # --- FFT με επιλογή παραθύρου ---
 def Transform(stream, npts, sampling_rate):
@@ -39,7 +41,7 @@ for filename in os.listdir(folder_path):
         max_time = tr.stats.starttime + (max_index / df)
 
         # --- Γενικευμένη εκθετική αποσύνθεση ---
-        fit_seconds = 2
+        fit_seconds = 5  # Αυξημένο για καλύτερο fit
         fit_start = max_index
         fit_end = min(fit_start + int(fit_seconds * df), len(tr.data))
 
@@ -50,7 +52,13 @@ for filename in os.listdir(folder_path):
         y_fit_valid = y_fit[mask]
 
         try:
-            popt_exp, _ = curve_fit(gen_exponential, x_fit_valid, y_fit_valid, p0=(max_amp, 1.0, 1.0), maxfev=100000)
+            popt_exp, _ = curve_fit(
+                gen_exponential,
+                x_fit_valid,
+                y_fit_valid,
+                p0=(max_amp, 1.0, 1.0),
+                maxfev=100000
+            )
             a_fit, b_fit, c_fit = popt_exp
             y_model = gen_exponential(x_fit_valid, *popt_exp)
             fit_label = f"y = {a_fit:.2f}·e^(-( {b_fit:.2f}·t )^{c_fit:.2f})"
@@ -67,7 +75,9 @@ for filename in os.listdir(folder_path):
         ff, freqs = Transform(segment, nfft, df)
 
         try:
-            popt, _ = curve_fit(omega2, freqs[1:], ff[1:], p0=(max(ff), 1.0, 2, 1), maxfev=100000)
+            p0 = (max(ff), 1.0, 2.0, 1.0)
+            bounds = ([1e-10, 1e-2, 0.5, 0.5], [1e2, 50.0, 10.0, 5.0])
+            popt, _ = curve_fit(omega2, freqs[1:], ff[1:], p0=p0, bounds=bounds, maxfev=100000)
             fc = np.abs(popt[1])
             fit_curve = omega2(freqs[1:], *popt)
             label = f'Fit: A0={popt[0]:.2e}, fc={fc:.2f} Hz, n={popt[2]:.2f}, γ={popt[3]:.2f}'

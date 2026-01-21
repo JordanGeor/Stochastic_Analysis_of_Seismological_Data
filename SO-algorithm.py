@@ -63,8 +63,8 @@ def plot_waveform_with_fourier(time_series, sampling_rate, outbreak_index):
 
 # Αναθεωρημένος αλγόριθμος SO για τη σύγκριση
 def so_algorithm(time_series, sampling_rate, threshold):
-    window_size = int(3.0 * sampling_rate)  # Μικρότερο παράθυρο (3 δευτερόλεπτα)
-    step = int(0.05 * sampling_rate)        # Μικρότερο βήμα (0.05 δευτερόλεπτα)
+    window_size = int(0.5 * sampling_rate)  
+    step = int(0.05 * sampling_rate)       
 
     L = len(time_series) 
 
