@@ -13,8 +13,8 @@ starttime = endtime - 30 * 24 * 3600
 evgi_lat = 38.62
 evgi_lon = 20.66
 
-maxradius_km = 20.0     # Μεγαλύτερη ακτίνα, πχ 20-30 χλμ
-min_magnitude = 3.5     # Ελάχιστο μέγεθος σεισμού, πχ 3.5 ή μεγαλύτερο
+maxradius_km = 20.0 
+min_magnitude = 3.5 
 
 
 # Δημιουργία φακέλων στην επιφάνεια εργασίας (χωρίς μηνύματα)
@@ -43,7 +43,7 @@ try:
         else:
             bins['5+'] += 1
 
-    stats_msg = "\n📊 Διαθέσιμα σεισμικά γεγονότα:\n"
+    stats_msg = "\n Διαθέσιμα σεισμικά γεγονότα:\n"
     for cat, val in bins.items():
         stats_msg += f" - Μέγεθος {cat}: {val} σεισμοί\n"
     messagebox.showinfo("Στατιστικά Σεισμών", stats_msg)
@@ -105,7 +105,7 @@ for i in range(min(requested, len(filtered_cat))):
             "Longitude": lon
         })
 
-        # Προαιρετικά: Κατέβασμα waveform
+        # Κατέβασμα waveform
         try:
             st = client.get_waveforms(network="HT", station="EVGI", location="",
                                       channel="HHZ", starttime=time - 10, endtime=time + 50)
@@ -121,7 +121,7 @@ df = pd.DataFrame(data)
 excel_path = os.path.join(folder_path, "evgi_earthquake_events.xlsx")
 df.to_excel(excel_path, index=False)
 
-# Εμφάνιση πίνακα σε GUI
+# Εμφάνιση πίνακα
 def show_table(dataframe):
     window = tk.Tk()
     window.title("📋 Σεισμικά Γεγονότα")
