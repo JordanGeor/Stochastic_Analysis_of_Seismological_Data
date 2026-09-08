@@ -62,8 +62,7 @@ EVGI/
 ├── disp.py
 ├── obspy_algorithm.py
 ├── SO-algorithm.py
-├── catalague.py
-└── erg.py
+└── catalague.py
 ```
 
 The scripts cover seismic data preparation, phase detection, waveform analysis, decay fitting, and spectral analysis.
