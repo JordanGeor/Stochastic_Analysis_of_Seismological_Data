@@ -172,7 +172,7 @@ The interface allows the user to:
 ## 📂 Repository Structure
 
 ```text
-EVGI/
+Stochastic_Analysis_of_Seismological_Data/
 ├── app.py
 ├── main.py
 ├── requirements.txt
