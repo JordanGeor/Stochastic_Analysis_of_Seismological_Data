@@ -214,8 +214,8 @@ The current application uses the modular implementation contained in `seismic_an
 Clone the repository:
 
 ```bash
-git clone https://github.com/JordanGeor/EVGI.git
-cd EVGI
+git clone https://github.com/JordanGeor/Stochastic_Analysis_of_Seismological_Data.git
+cd Stochastic_Analysis_of_Seismological_Data
 ```
 
 Install the required dependencies:
