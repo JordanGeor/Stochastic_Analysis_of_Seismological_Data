@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# VS Code
+.vscode/
+
+# Streamlit
+.streamlit/
+
+# Generated seismic data
+data/waveforms/*.mseed
+
+# Generated results
+results/figures/*
+results/tables/*
+
+# Exported analysis files
+*.xlsx
+*.csv
+
+# Operating system files
+.DS_Store
+Thumbs.db
